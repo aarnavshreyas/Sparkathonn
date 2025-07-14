@@ -1,103 +1,81 @@
-import Image from "next/image";
+import { DemoBackgroundPaths } from "@/components/ui/demo";
+import FuturisticFeaturesSection from "@/components/ui/FuturisticFeaturesSection";
+import VisualStatisticsSection from "@/components/ui/VisualStatisticsSection";
+import EnhancedDemoSection from "@/components/ui/EnhancedDemoSection";
+import TestimonialsSection from "@/components/ui/TestimonialsSection";
+import ConservationFooter from "@/components/ui/ConservationFooter";
+import { NavBarDemo } from "@/components/ui/tubelight-navbar-demo";
+import Link from "next/link";
+
+const testimonials = [
+  {
+    name: "Priya S.",
+    role: "Sustainability Lead, EcoMart",
+    text: "This dashboard transformed our inventory process and made sustainability tracking effortless!",
+  },
+  {
+    name: "Rahul M.",
+    role: "Admin, GreenGrocers",
+    text: "The return module and carbon analytics helped us reduce waste and improve compliance.",
+  },
+  {
+    name: "Ayesha K.",
+    role: "Procurement, FreshFields",
+    text: "We love the real-time expiry tracking and the ability to upload certifications for every product.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-start bg-white dark:bg-neutral-950 overflow-x-hidden">
+      {/* NavBar */}
+      <NavBarDemo />
+      {/* Hero Section */}
+      <section id="hero" className="w-full min-h-screen flex flex-col items-center justify-center relative">
+        {/* Animated background - always behind, never blocks clicks */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <DemoBackgroundPaths />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        {/* Content - always above, always clickable */}
+        <div className="relative z-20 flex flex-col items-center justify-center gap-6">
+          <h1 className="text-6xl md:text-8xl font-extrabold text-center bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-transparent bg-clip-text drop-shadow-lg mb-4">
+            Eco Inventory
+          </h1>
+          <p className="mt-6 text-xl md:text-2xl text-center text-[var(--primary)] font-semibold max-w-2xl drop-shadow">
+            Smarter stock. Greener returns.
+          </p>
+
+          <div className="flex gap-4">
+            <Link
+              href="/login/admin"
+              className="rounded-xl px-6 py-3 bg-black text-white dark:bg-white dark:text-black font-semibold shadow-lg hover:scale-105 transition-transform"
+            >
+              Admin Login
+            </Link>
+            <Link
+              href="/login/customer"
+              className="rounded-xl px-6 py-3 bg-neutral-200 text-black dark:bg-neutral-800 dark:text-white font-semibold shadow-lg hover:scale-105 transition-transform"
+            >
+              Customer Login
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="w-full"><FuturisticFeaturesSection /></section>
+
+      {/* Visual Statistics Section */}
+      <section id="statistics" className="w-full"><VisualStatisticsSection /></section>
+
+      {/* Enhanced Demo Section */}
+      <section id="demo" className="w-full"><EnhancedDemoSection /></section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="w-full"><TestimonialsSection /></section>
+
+      {/* Footer Section */}
+      <section id="footer" className="w-full"><ConservationFooter /></section>
     </div>
   );
 }
