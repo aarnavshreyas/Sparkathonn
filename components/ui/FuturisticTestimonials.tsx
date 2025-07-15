@@ -13,7 +13,7 @@ const testimonials = [
   {
     name: "Alex Rodriguez",
     role: "Forest Conservation Lead",
-    text: "The real-time deforestation alerts saved over 10,000 acres of rainforest. It's like having a guardian angel for our planet.",
+    text: "The real-time deforestation alerts saved over 10,000 acres of rainforest. It&apos;s like having a guardian angel for our planet.",
     icon: Leaf,
     gradient: "from-green-400 to-emerald-600"
   },
@@ -65,7 +65,7 @@ export default function FuturisticTestimonials() {
           Voices from the Future
         </h2>
         <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto">
-          Discover how cutting-edge conservation technology is transforming our planet's future
+          Discover how cutting-edge conservation technology is transforming our planet&apos;s future
         </p>
       </div>
 

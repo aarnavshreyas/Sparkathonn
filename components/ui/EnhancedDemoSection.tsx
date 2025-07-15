@@ -275,7 +275,7 @@ export default function EnhancedDemoSection() {
         {/* Final CTA */}
         <div className="text-center">
           <p className="text-lg text-neutral-600 dark:text-neutral-300 mb-6">
-            Don't just take our word for it. Experience the difference yourself.
+            Don&apos;t just take our word for it. Experience the difference yourself.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
