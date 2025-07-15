@@ -101,7 +101,7 @@ export default function FuturisticTestimonials() {
                   {testimonial.role}
                 </p>
                 <blockquote className="text-neutral-700 dark:text-neutral-200 leading-relaxed">
-                  "{testimonial.text}"
+                  &quot;{testimonial.text}&quot;
                 </blockquote>
               </div>
 

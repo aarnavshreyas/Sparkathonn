@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 
 const TestimonialsSection = () => {
@@ -74,10 +75,9 @@ const TestimonialsSection = () => {
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
     const interval = setInterval(nextTestimonial, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, nextTestimonial]);
 
   const StarRating = ({ rating }: { rating: number }) => (
     <div className="flex space-x-1">
@@ -109,7 +109,7 @@ const TestimonialsSection = () => {
             What Our Clients Say
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what our satisfied clients have to say about their experience.
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied clients have to say about their experience.
           </p>
         </div>
 
@@ -128,9 +128,11 @@ const TestimonialsSection = () => {
                     <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
                       {/* Avatar */}
                       <div className="relative">
-                        <img
+                        <Image
                           src={testimonial.image}
                           alt={testimonial.name}
+                          width={128}
+                          height={128}
                           className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-blue-500/20"
                         />
                         {testimonial.featured && (
@@ -146,7 +148,7 @@ const TestimonialsSection = () => {
                           <StarRating rating={testimonial.rating} />
                         </div>
                         <blockquote className="text-xl md:text-2xl text-gray-200 font-medium leading-relaxed mb-6">
-                          "{testimonial.content}"
+                          &quot;{testimonial.content}&quot;
                         </blockquote>
                         <div>
                           <div className="font-bold text-white text-lg mb-1">
@@ -181,12 +183,12 @@ const TestimonialsSection = () => {
 
         {/* Dots indicator */}
         <div className="flex justify-center space-x-2 mb-12">
-          {testimonials.map((_, index) => (
+          {testimonials.map((_, idx) => (
             <button
-              key={index}
-              onClick={() => goToTestimonial(index)}
+              key={idx}
+              onClick={() => goToTestimonial(idx)}
               className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex
+                idx === currentIndex
                   ? 'bg-blue-500 w-8'
                   : 'bg-gray-700 hover:bg-gray-500'
               }`}
