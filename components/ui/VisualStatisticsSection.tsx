@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, AreaChart, Area, RadialBarChart, RadialBar, ComposedChart, Tooltip } from 'recharts';
-import CountUp from 'react-countup';
 
 // Define Stat type
 interface Stat {
@@ -12,7 +11,7 @@ interface Stat {
   icon: string;
   color: string;
   chartType: 'line' | 'bar' | 'pie' | 'area' | 'radial' | 'composed';
-  chartData: any[]; // You can further specify this if chartData shape is known per chartType
+  chartData: unknown[]; // You can further specify this if chartData shape is known per chartType
 }
 
 export default function VisualStatisticsSection() {
@@ -107,23 +106,29 @@ export default function VisualStatisticsSection() {
     }
   ];
 
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: unknown[]; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white dark:bg-neutral-800 p-3 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700">
           <p className="text-sm font-medium text-neutral-900 dark:text-white">{label}</p>
-          {payload.map((entry, index) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: {entry.value.toLocaleString()}
-            </p>
-          ))}
+          {payload.map((entry, i) => {
+            if (typeof entry === 'object' && entry !== null && 'color' in entry && 'name' in entry && 'value' in entry) {
+              const e = entry as { color?: string; name?: string; value?: number };
+              return (
+                <p key={i} className="text-sm" style={{ color: e.color }}>
+                  {e.name}: {e.value?.toLocaleString?.()}
+                </p>
+              );
+            }
+            return null;
+          })}
         </div>
       );
     }
     return null;
   };
 
-  const renderChart = (stat: Stat, index: number) => {
+  const renderChart = (stat: Stat, chartIndex: number) => {
     switch (stat.chartType) {
       case 'line':
         return (
@@ -335,13 +340,13 @@ export default function VisualStatisticsSection() {
 
         {/* Enhanced statistics grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {statistics.map((stat, index) => (
+          {statistics.map((stat, chartIndex) => (
             <div
               key={stat.label}
               className={`group relative overflow-hidden rounded-3xl bg-white/90 dark:bg-neutral-900/90 shadow-xl border border-neutral-200/50 dark:border-neutral-700/50 backdrop-blur-xl transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20 ${
-                hoveredStat === index ? 'border-purple-500/50 dark:border-cyan-500/50 shadow-purple-500/20' : ''
+                hoveredStat === chartIndex ? 'border-purple-500/50 dark:border-cyan-500/50 shadow-purple-500/20' : ''
               }`}
-              onMouseEnter={() => setHoveredStat(index)}
+              onMouseEnter={() => setHoveredStat(chartIndex)}
               onMouseLeave={() => setHoveredStat(null)}
             >
               {/* Enhanced gradient overlay */}
@@ -381,7 +386,7 @@ export default function VisualStatisticsSection() {
                 </div>
                 {/* Enhanced chart with better spacing */}
                 <div className="mb-6 bg-neutral-50/50 dark:bg-neutral-800/30 rounded-xl p-4 border border-neutral-200/30 dark:border-neutral-700/30">
-                  {renderChart(stat, index)}
+                  {renderChart(stat, chartIndex)}
                 </div>
                 {/* Enhanced progress indicator */}
                 <div className="space-y-3">
@@ -392,7 +397,7 @@ export default function VisualStatisticsSection() {
                   <div className="relative h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
                     <div 
                       className={`absolute inset-y-0 left-0 bg-gradient-to-r ${stat.color} transition-all duration-2000 ease-out rounded-full`}
-                      style={{ width: hoveredStat === index ? '100%' : '75%' }}
+                      style={{ width: hoveredStat === chartIndex ? '100%' : '75%' }}
                     >
                       <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full"></div>
                     </div>

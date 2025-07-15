@@ -104,12 +104,11 @@ const CustomerDashboard = () => {
   ];
 
   type TabButtonProps = {
-    id: string;
     label: string;
     isActive: boolean;
     onClick: () => void;
   };
-  const TabButton = ({ id, label, isActive, onClick }: TabButtonProps) => (
+  const TabButton = ({ label, isActive, onClick }: TabButtonProps) => (
     <button
       onClick={onClick}
       className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
@@ -189,25 +188,21 @@ const CustomerDashboard = () => {
               </div>
               <div className="hidden md:flex items-center space-x-1 ml-8">
                 <TabButton 
-                  id="overview" 
                   label="Overview" 
                   isActive={activeTab === 'overview'}
                   onClick={() => setActiveTab('overview')}
                 />
                 <TabButton 
-                  id="orders" 
                   label="My Orders" 
                   isActive={activeTab === 'orders'}
                   onClick={() => setActiveTab('orders')}
                 />
                 <TabButton 
-                  id="returns" 
                   label="Returns" 
                   isActive={activeTab === 'returns'}
                   onClick={() => setActiveTab('returns')}
                 />
                 <TabButton 
-                  id="sustainability" 
                   label="Sustainability" 
                   isActive={activeTab === 'sustainability'}
                   onClick={() => setActiveTab('sustainability')}

@@ -115,7 +115,7 @@ const ReturnsManagement = () => {
   function handleEdit(returnItem: ReturnItem) {
     setEditingReturn(returnItem);
     // Remove id from returnItem for formData, ensure complaintId and governmentRecord are always strings
-    const { id, complaintId, governmentRecord, ...rest } = returnItem;
+    const { complaintId, governmentRecord, ...rest } = returnItem;
     setFormData({
       ...rest,
       complaintId: complaintId ?? '',
