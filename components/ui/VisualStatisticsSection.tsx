@@ -186,9 +186,10 @@ export default function VisualStatisticsSection() {
                   dataKey="value"
                   animationDuration={2000}
                 >
-                  {stat.chartData.map((entry, i) => (
-                    <Cell key={`cell-${i}`} fill={entry.color} />
-                  ))}
+                  {stat.chartData.map((entry, i) => {
+                    const e = entry as { color: string };
+                    return <Cell key={`cell-${i}`} fill={e.color} />;
+                  })}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
               </PieChart>
