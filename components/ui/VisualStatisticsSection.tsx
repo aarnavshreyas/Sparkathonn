@@ -4,11 +4,22 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, AreaChart, Area, RadialBarChart, RadialBar, ComposedChart, Tooltip } from 'recharts';
 import CountUp from 'react-countup';
 
+// Define Stat type
+interface Stat {
+  label: string;
+  value: string;
+  numericValue: number;
+  icon: string;
+  color: string;
+  chartType: 'line' | 'bar' | 'pie' | 'area' | 'radial' | 'composed';
+  chartData: any[]; // You can further specify this if chartData shape is known per chartType
+}
+
 export default function VisualStatisticsSection() {
   const [hoveredStat, setHoveredStat] = useState<number | null>(null);
 
   // Example statistics for a sustainability dashboard
-  const statistics = [
+  const statistics: Stat[] = [
     {
       label: "Products Tracked",
       value: "12,500+",
@@ -96,14 +107,14 @@ export default function VisualStatisticsSection() {
     }
   ];
 
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: unknown[]; label?: string }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white dark:bg-neutral-800 p-3 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700">
           <p className="text-sm font-medium text-neutral-900 dark:text-white">{label}</p>
-          {payload.map((entry: unknown, idx: number) => (
-            <p key={idx} className="text-sm" style={{ color: (entry as any).color }}>
-              {(entry as any).name}: {(entry as any).value.toLocaleString()}
+          {payload.map((entry, index) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: {entry.value.toLocaleString()}
             </p>
           ))}
         </div>
@@ -112,12 +123,12 @@ export default function VisualStatisticsSection() {
     return null;
   };
 
-  const renderChart = (stat: unknown, idx: number) => {
-    switch ((stat as any).chartType) {
+  const renderChart = (stat: Stat, index: number) => {
+    switch (stat.chartType) {
       case 'line':
         return (
           <ResponsiveContainer width="100%" height={80}>
-            <LineChart data={(stat as any).chartData}>
+            <LineChart data={stat.chartData}>
               <XAxis dataKey="month" hide />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} />
@@ -136,7 +147,7 @@ export default function VisualStatisticsSection() {
       case 'bar':
         return (
           <ResponsiveContainer width="100%" height={80}>
-            <BarChart data={(stat as any).chartData}>
+            <BarChart data={stat.chartData}>
               <XAxis dataKey="month" hide />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} />
@@ -161,7 +172,7 @@ export default function VisualStatisticsSection() {
             <ResponsiveContainer width={80} height={80}>
               <PieChart>
                 <Pie
-                  data={(stat as any).chartData}
+                  data={stat.chartData}
                   cx="50%"
                   cy="50%"
                   innerRadius={20}
@@ -170,8 +181,8 @@ export default function VisualStatisticsSection() {
                   dataKey="value"
                   animationDuration={2000}
                 >
-                  {(stat as any).chartData.map((entry: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  {stat.chartData.map((entry, i) => (
+                    <Cell key={`cell-${i}`} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -182,7 +193,7 @@ export default function VisualStatisticsSection() {
       case 'area':
         return (
           <ResponsiveContainer width="100%" height={80}>
-            <AreaChart data={(stat as any).chartData}>
+            <AreaChart data={stat.chartData}>
               <XAxis dataKey="month" hide />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} />
@@ -213,7 +224,7 @@ export default function VisualStatisticsSection() {
                 cy="50%" 
                 innerRadius="20%" 
                 outerRadius="80%" 
-                data={(stat as any).chartData}
+                data={stat.chartData}
               >
                 <RadialBar
                   dataKey="value"
@@ -229,7 +240,7 @@ export default function VisualStatisticsSection() {
       case 'composed':
         return (
           <ResponsiveContainer width="100%" height={80}>
-            <ComposedChart data={(stat as any).chartData}>
+            <ComposedChart data={stat.chartData}>
               <XAxis dataKey="month" hide />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} />
@@ -265,8 +276,8 @@ export default function VisualStatisticsSection() {
     }
   };
 
-  const getSubtitle = (stat: unknown) => {
-    switch ((stat as any).label) {
+  const getSubtitle = (stat: Stat) => {
+    switch (stat.label) {
       case "Products Tracked":
         return "Live inventory updates";
       case "Returns Managed":
@@ -324,7 +335,7 @@ export default function VisualStatisticsSection() {
 
         {/* Enhanced statistics grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {statistics.map((stat) => (
+          {statistics.map((stat, index) => (
             <div
               key={stat.label}
               className={`group relative overflow-hidden rounded-3xl bg-white/90 dark:bg-neutral-900/90 shadow-xl border border-neutral-200/50 dark:border-neutral-700/50 backdrop-blur-xl transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20 ${
