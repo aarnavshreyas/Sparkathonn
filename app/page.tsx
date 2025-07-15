@@ -7,24 +7,6 @@ import ConservationFooter from "@/components/ui/ConservationFooter";
 import { NavBarDemo } from "@/components/ui/tubelight-navbar-demo";
 import Link from "next/link";
 
-const testimonials = [
-  {
-    name: "Priya S.",
-    role: "Sustainability Lead, EcoMart",
-    text: "This dashboard transformed our inventory process and made sustainability tracking effortless!",
-  },
-  {
-    name: "Rahul M.",
-    role: "Admin, GreenGrocers",
-    text: "The return module and carbon analytics helped us reduce waste and improve compliance.",
-  },
-  {
-    name: "Ayesha K.",
-    role: "Procurement, FreshFields",
-    text: "We love the real-time expiry tracking and the ability to upload certifications for every product.",
-  },
-];
-
 export default function Home() {
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-start bg-white dark:bg-neutral-950 overflow-x-hidden">

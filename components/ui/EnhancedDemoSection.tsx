@@ -103,7 +103,7 @@ export default function EnhancedDemoSection() {
             Experience the Future of Inventory Management
           </h2>
           <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto mb-8">
-            Don't just read about it—see how our platform transforms the way you manage inventory, 
+            Don&apos;t just read about it&mdash;see how our platform transforms the way you manage inventory, 
             track returns, and measure sustainability impact.
           </p>
           {/* Live demo stats */}

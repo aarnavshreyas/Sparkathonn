@@ -56,7 +56,7 @@ export default function ConservationFooter() {
             </div>
             <p className="text-neutral-300 mb-6 text-lg leading-relaxed max-w-md">
               Pioneering the future of conservation with cutting-edge AI technology. 
-              Together, we're building a sustainable tomorrow for our planet.
+              Together, we&apos;re building a sustainable tomorrow for our planet.
             </p>
             
             {/* Newsletter Signup */}

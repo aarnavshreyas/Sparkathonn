@@ -3,27 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Leaf, 
-  Package, 
   RotateCcw, 
-  TrendingUp, 
   Award, 
   Bell, 
   Search, 
   Filter,
-  Calendar,
-  MapPin,
-  Zap,
   Recycle,
   User,
-  Settings,
-  LogOut,
   ChevronRight,
   Eye,
   Download,
   Star,
   Globe,
-  Target,
-  Activity
+  Target
 } from 'lucide-react';
 import {
   AreaChart as ReAreaChart,
@@ -39,7 +31,7 @@ import { useRouter } from 'next/navigation';
 
 const CustomerDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
-  const [notifications, setNotifications] = useState(3);
+  const [notifications] = useState(3);
   const [profileName, setProfileName] = useState<string | null>(null);
 
   useEffect(() => {
