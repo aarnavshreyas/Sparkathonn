@@ -284,6 +284,16 @@ export default function VisualStatisticsSection() {
     }
   };
 
+  const formatStatValue = (value: number, label: string) => {
+    if (label === "CO₂ Saved (kg)") {
+      return `${value} kg`;
+    } else if (label === "Green Certifications") {
+      return `${value} certifications`;
+    } else {
+      return value.toLocaleString();
+    }
+  };
+
   return (
     <section className="w-full max-w-7xl mx-auto py-12 px-4 md:px-8 relative">
       {/* Enhanced animated background */}
@@ -314,7 +324,7 @@ export default function VisualStatisticsSection() {
 
         {/* Enhanced statistics grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {statistics.map((stat, index) => (
+          {statistics.map((stat) => (
             <div
               key={stat.label}
               className={`group relative overflow-hidden rounded-3xl bg-white/90 dark:bg-neutral-900/90 shadow-xl border border-neutral-200/50 dark:border-neutral-700/50 backdrop-blur-xl transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20 ${
@@ -348,15 +358,7 @@ export default function VisualStatisticsSection() {
                 <div className="mb-6">
                   <div className="flex items-baseline justify-between">
                     <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-neutral-900 to-neutral-600 dark:from-white dark:to-neutral-300 text-transparent bg-clip-text">
-                      <CountUp
-                        start={0}
-                        end={stat.numericValue}
-                        duration={1.5}
-                        separator=","
-                        decimal="."
-                        prefix={stat.label === "CO₂ Saved (kg)" ? "" : stat.label === "Green Certifications" ? "" : ""}
-                        suffix={stat.label === "CO₂ Saved (kg)" ? " kg" : stat.label === "Green Certifications" ? " certifications" : ""}
-                      />
+                      {formatStatValue(stat.numericValue, stat.label)}
                     </span>
                     <div className="flex items-center space-x-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>

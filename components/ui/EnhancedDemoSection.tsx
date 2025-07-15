@@ -86,7 +86,7 @@ export default function EnhancedDemoSection() {
       setActiveStep((prev) => (prev + 1) % demoSteps.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [demoSteps.length]);
 
   return (
     <section className="w-full py-20 px-0 md:px-0 relative overflow-hidden">
