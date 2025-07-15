@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, Edit, Trash2, Upload, Filter, X, AlertTriangle, CheckCircle, XCircle, Calendar, Package, TrendingUp } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Plus, Search, Edit, Trash2, Upload, X, AlertTriangle, CheckCircle, XCircle, Calendar, Package, TrendingUp } from 'lucide-react';
 // Removed CSS module import
 
 const InventoryManagementSystem = () => {
@@ -76,16 +76,6 @@ const InventoryManagementSystem = () => {
     if (daysUntilExpiry <= 7) return 'expiring';
     if (item.stock < item.threshold) return 'low-stock';
     return 'good';
-  };
-
-  const getSpoilageStatus = (item) => {
-    const today = new Date();
-    const expiry = new Date(item.expiryDate);
-    const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
-    
-    if (daysUntilExpiry < 0) return 'Spoiled';
-    if (daysUntilExpiry <= 7) return 'Near Expiry';
-    return 'Good';
   };
 
   const filteredItems = useMemo(() => {
@@ -202,7 +192,6 @@ const InventoryManagementSystem = () => {
 
   const getStatusBadge = (item) => {
     const status = getItemStatus(item);
-    const spoilageStatus = getSpoilageStatus(item);
     
     switch (status) {
       case 'spoiled':

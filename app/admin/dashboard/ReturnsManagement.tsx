@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Search, Filter, Edit, Trash2, FileText, TrendingUp, Package, AlertCircle, Recycle, Warehouse } from 'lucide-react';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { Plus, Search, Edit, Trash2, FileText, TrendingUp, Package, AlertCircle, Recycle, Warehouse } from 'lucide-react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 // Types for trends data
 interface DestinationData {

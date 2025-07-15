@@ -9,14 +9,12 @@ import {
   Home,
   BarChart2,
   Layers,
-  Users,
   FileText,
   BookOpen,
   MessageSquare,
   MoreHorizontal,
-  ChevronDown,
 } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, Legend } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import InventoryManagementSystem from './InventoryManagementSystem';
@@ -33,11 +31,9 @@ const sidebarDocs = [
   { label: "Word Assistant", icon: MessageSquare },
   { label: "More", icon: MoreHorizontal },
 ];
-const topTabs = ["Cards", "Dashboard", "Mail", "Pricing", "Color Palette"];
 
 export default function AdminDashboard() {
   const [activeSidebar, setActiveSidebar] = useState("Dashboard");
-  const [activeTab, setActiveTab] = useState("Dashboard");
   const [theme, setTheme] = useState("dark");
   const router = useRouter();
   // Dashboard metric cards
@@ -135,20 +131,6 @@ export default function AdminDashboard() {
     { name: 'Compost', value: 80, color: 'var(--chart-3)' },
     { name: 'Supplier', value: 60, color: 'var(--chart-4)' },
     { name: 'Complaint', value: 15, color: 'var(--chart-5)' },
-  ];
-  const [docTab, setDocTab] = useState('Outline');
-  const docTabs = [
-    { label: 'Outline', count: null },
-    { label: 'Past Performance', count: 3 },
-    { label: 'Key Personnel', count: 2 },
-    { label: 'Focus Documents', count: null },
-  ];
-  const tableData = [
-    { header: 'Cover page', type: 'Cover page', target: 18, limit: 5, reviewer: 'Eddie Lake' },
-    { header: 'Table of contents', type: 'Table of contents', target: 29, limit: 24, reviewer: 'Eddie Lake' },
-    { header: 'Executive summary', type: 'Narrative', target: 10, limit: 13, reviewer: 'Eddie Lake' },
-    { header: 'Technical approach', type: 'Narrative', target: 27, limit: 23, reviewer: 'Jamik Tashp' },
-    { header: 'Design', type: 'Narrative', target: 2, limit: 16, reviewer: 'Jamik Tashp' },
   ];
 
   // Alerts
