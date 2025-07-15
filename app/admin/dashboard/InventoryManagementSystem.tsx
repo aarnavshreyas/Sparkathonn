@@ -2,8 +2,20 @@ import React, { useState, useMemo } from 'react';
 import { Plus, Search, Edit, Trash2, Upload, X, AlertTriangle, CheckCircle, XCircle, Calendar, Package, TrendingUp } from 'lucide-react';
 // Removed CSS module import
 
+// Define the type for inventory items
+interface InventoryItem {
+  id: number;
+  name: string;
+  category: string;
+  stock: number;
+  threshold: number;
+  expiryDate: string;
+  ethicalCertified: boolean;
+  documents: { name: string; size: string }[];
+}
+
 const InventoryManagementSystem = () => {
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<InventoryItem[]>([
     {
       id: 1,
       name: 'Organic Cotton Fabric',
@@ -47,15 +59,23 @@ const InventoryManagementSystem = () => {
   ]);
 
   const [showModal, setShowModal] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
+  const [editingItem, setEditingItem] = useState<InventoryItem | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [ethicalFilter, setEthicalFilter] = useState('');
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<number | null>(null);
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    category: string;
+    stock: string;
+    threshold: string;
+    expiryDate: string;
+    ethicalCertified: boolean;
+    documents: { name: string; size: string }[];
+  }>({
     name: '',
     category: '',
     stock: '',
@@ -67,10 +87,11 @@ const InventoryManagementSystem = () => {
 
   const categories = [...new Set(items.map(item => item.category))];
 
-  const getItemStatus = (item) => {
+  // Fix for arithmetic operation types in getItemStatus
+  const getItemStatus = (item: InventoryItem) => {
     const today = new Date();
     const expiry = new Date(item.expiryDate);
-    const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+    const daysUntilExpiry = Math.ceil((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     
     if (daysUntilExpiry < 0) return 'spoiled';
     if (daysUntilExpiry <= 7) return 'expiring';
@@ -79,7 +100,7 @@ const InventoryManagementSystem = () => {
   };
 
   const filteredItems = useMemo(() => {
-    return items.filter(item => {
+    return items.filter((item: InventoryItem) => {
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = !categoryFilter || item.category === categoryFilter;
       const matchesEthical = !ethicalFilter || 
@@ -98,17 +119,18 @@ const InventoryManagementSystem = () => {
 
   const analytics = useMemo(() => {
     const totalProducts = items.length;
-    const nearExpiry = items.filter(item => {
+    const nearExpiry = items.filter((item: InventoryItem) => {
       const status = getItemStatus(item);
       return status === 'expiring' || status === 'spoiled';
     }).length;
-    const lowStock = items.filter(item => getItemStatus(item) === 'low-stock').length;
-    const ethicalCertified = items.filter(item => item.ethicalCertified).length;
+    const lowStock = items.filter((item: InventoryItem) => getItemStatus(item) === 'low-stock').length;
+    const ethicalCertified = items.filter((item: InventoryItem) => item.ethicalCertified).length;
     
     return { totalProducts, nearExpiry, lowStock, ethicalCertified };
   }, [items]);
 
-  const handleSubmit = (e) => {
+  // Fix for handleSubmit event type
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editingItem) {
       setItems(items.map(item => 
@@ -142,7 +164,7 @@ const InventoryManagementSystem = () => {
     setShowModal(false);
   };
 
-  const handleEdit = (item) => {
+  const handleEdit = (item: InventoryItem) => {
     setEditingItem(item);
     setFormData({
       name: item.name,
@@ -156,31 +178,36 @@ const InventoryManagementSystem = () => {
     setShowModal(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     setItems(items.filter(item => item.id !== id));
     setShowDeleteConfirm(null);
   };
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const newDocuments = files.map(file => ({
-      name: file.name,
-      size: (file.size / 1024 / 1024).toFixed(1) + ' MB'
-    }));
+  // Fix for handleFileUpload event type and file type
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? []);
+    const newDocuments = files.map((file) => {
+      const typedFile = file as File;
+      return {
+        name: typedFile.name,
+        size: (typedFile.size / 1024 / 1024).toFixed(1) + ' MB'
+      };
+    });
     setFormData({
       ...formData,
       documents: [...formData.documents, ...newDocuments]
     });
   };
 
-  const removeDocument = (index) => {
+  // Fix for removeDocument index type
+  const removeDocument = (index: number) => {
     setFormData({
       ...formData,
       documents: formData.documents.filter((_, i) => i !== index)
     });
   };
 
-  const getRowClassName = (item) => {
+  const getRowClassName = (item: InventoryItem) => {
     const status = getItemStatus(item);
     switch (status) {
       case 'spoiled': return 'bg-red-50 border-red-200';
@@ -190,7 +217,7 @@ const InventoryManagementSystem = () => {
     }
   };
 
-  const getStatusBadge = (item) => {
+  const getStatusBadge = (item: InventoryItem) => {
     const status = getItemStatus(item);
     
     switch (status) {
@@ -213,10 +240,11 @@ const InventoryManagementSystem = () => {
     }
   };
 
-  const getDaysUntilExpiry = (expiryDate) => {
+  // Fix for getDaysUntilExpiry expiryDate type
+  const getDaysUntilExpiry = (expiryDate: string) => {
     const today = new Date();
     const expiry = new Date(expiryDate);
-    const days = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+    const days = Math.ceil((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return days;
   };
 
