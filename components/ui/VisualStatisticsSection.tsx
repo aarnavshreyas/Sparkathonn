@@ -128,7 +128,7 @@ export default function VisualStatisticsSection() {
     return null;
   };
 
-  const renderChart = (stat: Stat, chartIndex: number) => {
+  const renderChart = (stat: Stat) => {
     switch (stat.chartType) {
       case 'line':
         return (
@@ -386,7 +386,7 @@ export default function VisualStatisticsSection() {
                 </div>
                 {/* Enhanced chart with better spacing */}
                 <div className="mb-6 bg-neutral-50/50 dark:bg-neutral-800/30 rounded-xl p-4 border border-neutral-200/30 dark:border-neutral-700/30">
-                  {renderChart(stat, chartIndex)}
+                  {renderChart(stat)}
                 </div>
                 {/* Enhanced progress indicator */}
                 <div className="space-y-3">

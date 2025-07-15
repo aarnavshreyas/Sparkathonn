@@ -121,7 +121,7 @@ const TestimonialsSection = () => {
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
           >
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
                 <div className="max-w-4xl mx-auto">
                   <div className="bg-neutral-900 rounded-3xl shadow-xl p-8 md:p-12 border border-neutral-800 hover:shadow-2xl transition-shadow duration-300">
